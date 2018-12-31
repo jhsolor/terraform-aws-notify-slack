@@ -1,0 +1,22 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn": "arn:aws:sns:us-east-1:123456789123:some-sns-topic:ffffffff-eeee-dddd-cccc-ba1234567890",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "aaaaaaaa-bbbb-cccc-dddd-1234567890ab",
+        "TopicArn": "arn:aws:sns:us-east-1:123456789123:some-sns-topic",
+        "Subject": "None",
+        "Message": "{\"AlarmName\":\"Example\",\"AlarmDescription\":\"Example alarm description.\",\"AWSAccountId\":\"123456789123\",\"NewStateValue\":\"ALARM\",\"NewStateReason\":\"Threshold Crossed\",\"StateChangeTime\":\"2018-12-25T00:00:01.000+0000\",\"Region\":\"EU - Ireland\",\"OldStateValue\":\"OK\"}",
+        "Timestamp": "2018-12-25T00:00:01.000Z",
+        "SignatureVersion": "1",
+        "Signature": "***",
+        "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-ac565b8b1a6c5d002d285f9598aa1d9b.pem",
+        "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:123456789123:some-sns-topic:ffffffff-eeee-dddd-cccc-ba1234567890",
+        "MessageAttributes": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn": "arn:aws:sns:us-east-1:123456789123:some-sns-topic:ffffffff-eeee-dddd-cccc-ba1234567890",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "aaaaaaaa-bbbb-cccc-dddd-1234567890ab",
+        "TopicArn": "arn:aws:sns:us-east-1:123456789123:some-sns-topic",
+        "Subject": "None",
+        "Message": "{\"version\":\"0\",\"id\":\"12345678-1234-1234-1234-aaaaaaaaeeee\",\"detail-type\":\"Santa Claus Spotted Event\",\"source\":\"aws.santa\",\"account\":\"123456789123\",\"time\":\"2018-12-25T00:00:01.000Z\",\"region\":\"us-east-1\",\"resources\":[\"arn:aws:rds:us-east-1:123456789123:db:santas-sleigh\"],\"detail\":{\"EventCategories\":[\"spotted\"],\"SourceType\":\"SANTA_SLEIGH\",\"SourceArn\":\"arn:aws:rds:us-east-1:123456789123:db:santas-sleigh\",\"Date\":\"2018-12-25T00:00:01.000Z\",\"Message\":\"Manual cluster snapshot created\",\"SourceIdentifier\":\"santas-sleigh\"}}",
+        "Timestamp": "2018-12-25T00:00:01.000Z",
+        "SignatureVersion": "1",
+        "Signature": "***",
+        "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-ac565b8b1a6c5d002d285f9598aa1d9b.pem",
+        "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:123456789123:some-sns-topic:ffffffff-eeee-dddd-cccc-ba1234567890",
+        "MessageAttributes": {}
+      }
+    }
+  ]
+}

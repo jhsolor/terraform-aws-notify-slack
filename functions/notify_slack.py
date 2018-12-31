@@ -14,7 +14,6 @@ def decrypt(encrypted_url):
     except Exception:
         logging.exception("Failed to decrypt URL with KMS")
 
-
 def cloudwatch_notification(message, region):
     states = {'OK': 'good', 'INSUFFICIENT_DATA': 'warning', 'ALARM': 'danger'}
 
@@ -35,6 +34,33 @@ def cloudwatch_notification(message, region):
             ]
         }
 
+def get_field(title, message, key, short):
+    try:
+        return [{ 'title': title, 'value': message[key], "short": short }]
+    except:
+        logging.exception(f'Unable to parse message key {key}')
+        return []
+
+def get_subfield(title, message, key1, key2, short):
+    try:
+        return [{ 'title': title, 'value': message[key1][key2], "short": short }]
+    except:
+        logging.exception(f'Unable to parse multi-part message key {key1} {key2}')
+        return []
+
+
+def cloudwatch_event_notification(message, region):
+    fields = []
+
+    fields.extend(get_field('Event Type', message, 'detail-type', True))
+    fields.extend(get_field('Region', message, 'region', True))
+    fields.extend(get_subfield('Categories', message, 'detail', 'EventCategories', True))
+    fields.extend(get_subfield('Message', message, 'detail', 'Message', False))
+    
+    return {
+       "fallback": "Message from CloudWatch",
+       "fields": fields
+    }
 
 def default_notification(message):
     return {
@@ -42,9 +68,11 @@ def default_notification(message):
             "fields": [{"title": "Message", "value": json.dumps(message), "short": False}]
         }
 
-
 # Send a message to a slack channel
 def notify_slack(message, region):
+    if type(message) is str:
+        message = json.loads(message)
+
     slack_url = os.environ['SLACK_WEBHOOK_URL']
     if not slack_url.startswith("http"):
         slack_url = decrypt(slack_url)
@@ -61,7 +89,11 @@ def notify_slack(message, region):
     }
     if "AlarmName" in message:
         notification = cloudwatch_notification(message, region)
-        payload['text'] = "AWS CloudWatch notification - " + message["AlarmName"]
+        payload['text'] = f'AWS CloudWatch notification - {message["AlarmName"]}'
+        payload['attachments'].append(notification)
+    elif "EventCategories" in message:
+        notification = cloudwatch_event_notification(message, region)
+        payload['text'] = f'AWS CloudWatch Event - {message["detail-type"]}'
         payload['attachments'].append(notification)
     else:
         payload['text'] = "AWS notification"
