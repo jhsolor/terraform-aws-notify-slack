@@ -73,7 +73,7 @@ def default_notification(message):
 # Send a message to a slack channel
 def notify_slack(message, region):
     if type(message) is str:
-        message = json.loads(message)
+        js = json.loads(message)
 
     slack_url = os.environ['SLACK_WEBHOOK_URL']
     if not slack_url.startswith("http"):
@@ -90,12 +90,12 @@ def notify_slack(message, region):
         "attachments": []
     }
     if "AlarmName" in message:
-        notification = cloudwatch_notification(message, region)
-        payload['text'] = f'AWS CloudWatch notification - {message["AlarmName"]}'
+        notification = cloudwatch_notification(js, region)
+        payload['text'] = f'AWS CloudWatch notification - {js["AlarmName"]}'
         payload['attachments'].append(notification)
     elif "EventCategories" in message:
-        notification = cloudwatch_event_notification(message, region)
-        payload['text'] = f'AWS CloudWatch Event - {message["detail-type"]}'
+        notification = cloudwatch_event_notification(js, region)
+        payload['text'] = f'AWS CloudWatch Event - {js["detail-type"]}'
         payload['attachments'].append(notification)
     else:
         payload['text'] = "AWS notification"
