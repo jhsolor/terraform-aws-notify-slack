@@ -40,7 +40,7 @@ data "null_data_source" "lambda_file" {
 
 data "null_data_source" "lambda_archive" {
   inputs {
-    filename = "notify_slack.zip" # Try to work around hard-coded module path failure
+    filename = "${substr("${path.module}/functions/notify_slack.zip", length(path.cwd) + 1, -1)}"
   }
 }
 
