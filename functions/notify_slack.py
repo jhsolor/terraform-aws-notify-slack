@@ -54,8 +54,10 @@ def cloudwatch_event_notification(message, region):
 
     fields.extend(get_field('Event Type', message, 'detail-type', True))
     fields.extend(get_field('Region', message, 'region', True))
+    fields.extend(get_subfield('Timestamp', message, 'detail', 'time', True))
     fields.extend(get_subfield('Categories', message, 'detail', 'EventCategories', True))
     fields.extend(get_subfield('Message', message, 'detail', 'Message', False))
+
     
     return {
        "fallback": "Message from CloudWatch",
